@@ -1,0 +1,57 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+jar {
+	version = '1.0'
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+                   'Implementation-Version': version
+    }
+}
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    mybatisGeneratorVersion                = '1.3.6'
+	mybatisVersion                         = '3.4.6'
+	jdbcVersion                            = '5.1.46'
+	junitVersion                           = '4.12'
+	
+	
+	libraries = [
+		jdbcConnector:                    "mysql:mysql-connector-java:${jdbcVersion}",
+		mybatis:                          "org.mybatis:mybatis:${mybatisVersion}",
+		mybatisGenerator:                 "org.mybatis.generator:mybatis-generator:${mybatisGeneratorVersion}",
+		junit:                            "junit:junit:${junitVersion}"
+	]
+}
+
+dependencies {
+    compile(libraries.jdbcConnector)
+    compile(libraries.mybatis)
+    compile(libraries.mybatisGenerator)
+    testCompile(libraries.junit)
+    
+}
+
+test {
+    systemProperties 'property': 'value'
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
